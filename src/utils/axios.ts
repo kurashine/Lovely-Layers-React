@@ -7,21 +7,8 @@ const axiosInstance = axios.create({
   headers: {
     "Content-Type": "application/json",
     "Accept": "application/json",
-    // ЭТОТ ЗАГОЛОВОК УБИРАЕТ СТРАНИЦУ С ПАРОЛЕМ LOCALTUNNEL
-    "bypass-tunnel-reminder": "true"
   },
 });
-
-// На всякий случай дублируем заголовок в интерцепторе
-axiosInstance.interceptors.request.use(
-  (config) => {
-    if (config.headers) {
-      config.headers["bypass-tunnel-reminder"] = "true";
-    }
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
 
 export const fetcher = (url: string) =>
   axiosInstance.get(url).then((res) => res.data);
