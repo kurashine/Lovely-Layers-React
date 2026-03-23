@@ -1,0 +1,59 @@
+.info-card {
+  background-color: rgba(16, 16, 16, 1); /* Фон */
+  color: #fff; /* Цвет текста */
+  border-radius: 10px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.info-card__content {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.info-card__icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.info-card__icon {
+  object-fit: contain;
+}
+
+.info-card__text {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.info-card__title {
+  margin: 0;
+  font-size: 14px; /* Настроить при необходимости */
+  font-weight: 400;
+}
+
+.info-card__value {
+  margin: 0;
+  font-size: 24px; /* Настроить при необходимости */
+  font-weight: 600;
+}
+
+.info-card__tooltip {
+  cursor: pointer;
+  width: 24px; /* Размер иконки */
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.info-card__tooltip span {
+  font-size: 18px; /* Настроить при необходимости */
+  color: #fff; /* Цвет иконки */
+}

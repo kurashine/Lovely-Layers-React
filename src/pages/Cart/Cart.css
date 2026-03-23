@@ -1,0 +1,272 @@
+.cart__empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cart__title {
+  margin: 20px 0;
+}
+
+.cart__container {
+  min-height: calc(100vh - 110px - 70px);
+}
+
+/* .cart { */
+/* border: 1px solid red; */
+/* } */
+
+.cart__hero {
+  gap: 40px;
+  display: flex;
+}
+
+.cart__summary-container {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  flex: 3;
+}
+
+/* .cart__summary {
+} */
+
+.cart__summary .btn {
+  margin: 30px auto 0 auto;
+  display: block;
+}
+
+.cart__summary-title {
+  color: var(--dark-color);
+  margin-bottom: 20px;
+
+  font-size: 1.1rem;
+  font-weight: 600;
+
+  text-align: center;
+}
+
+.cart__summary-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.cart__summary-item:first-of-type {
+  margin-bottom: 30px;
+}
+
+.cart__summary-item-title {
+  font-weight: 500;
+  color: var(--gray-color);
+  font-size: 1rem;
+}
+
+.cart__summary-item-text {
+  color: var(--dark-color);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.cart__summary-line {
+  margin: 24px 0 19px 0;
+  height: 1px;
+  background-color: var(--gray-color);
+}
+
+.cart__products {
+  flex: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cart__products-item {
+  padding: 24px 32px;
+  display: flex;
+  align-items: center;
+  gap: 25px;
+
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.cart__products-item__small {
+  padding: 10px 12px;
+}
+
+.cart__products-item-hero {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.cart__products-item-hero-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 150px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--dark-color);
+}
+
+.cart__products-item-hero-price {
+  white-space: nowrap;
+}
+
+.cart__products-item-hero-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cart__products-item > img {
+  object-fit: cover;
+
+  border-radius: 8px;
+  width: 100px;
+  height: 80px;
+}
+
+.cart__products-item__small > img {
+  width: 60px;
+  height: 40px;
+}
+
+.cart__products-item__small .cart__products-item-hero-name {
+  font-size: 1rem;
+  width: 100px;
+}
+
+.cart__products-item__small .quantity-select {
+  height: 30px;
+  gap: 5px;
+}
+
+.cart__products-item__small .quantity-select__count {
+  width: 30px;
+  height: 30px;
+}
+
+.cart__summary-products {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cart__recipient-form {
+}
+
+.cart__recipient-title {
+  font-size: 1.3rem;
+  font-weight: 500;
+
+  color: var(--gray-color);
+
+  margin-bottom: 20px;
+}
+
+.cart__recipient-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.cart__recipient-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.cart__recipient-field label {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: var(--gray-color);
+}
+
+.cart__recipient-field input {
+  padding: 12px;
+  font-size: 0.9rem;
+  border: 1px solid rgba(218, 218, 218, 1);
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.cart__recipient-field input:focus {
+  border-color: var(--dark-color);
+}
+
+.cart__recipient-field input::placeholder {
+  color: var(--gray-color);
+}
+
+.cart__recipient-fields .cart__recipient-field:nth-child(odd) {
+  margin-right: 10px;
+}
+
+.cart__payment-form {
+  margin: 20px 0;
+}
+
+.cart__sub-title {
+  font-size: 1.3rem;
+  font-weight: 500;
+
+  color: var(--gray-color);
+
+  margin-bottom: 20px;
+}
+
+.cart__payment-options {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.cart__payment-option {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+  border-radius: 4px;
+
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.cart__payment-option-selector {
+  width: 10px;
+  height: 10px;
+  border: 1px solid var(--gray-color);
+  background-color: transparent;
+  border-radius: 50%;
+}
+
+.cart__payment-option-selector_selected {
+  border-color: var(--dark-color);
+  background-color: var(--dark-color);
+}
+
+.cart__payment-option label {
+  display: flex;
+  flex: 1;
+
+  flex-direction: column;
+  gap: 5px;
+
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.cart__payment-option label span {
+  font-size: 12px;
+  color: #555;
+}
+
+.cart__payment-option_selected {
+  /* background-color: rgba(217, 217, 217, 0.25); */
+  background-color: red;
+}

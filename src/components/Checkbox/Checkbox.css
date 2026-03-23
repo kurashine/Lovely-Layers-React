@@ -1,0 +1,35 @@
+.checkbox-container {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-input {
+  display: none;
+}
+
+.checkbox-label {
+  cursor: pointer;
+  position: relative;
+  font-size: 0.875rem;
+  padding-left: 25px;
+  color: var(--dark-color);
+}
+
+.checkbox-label:before,
+.checkbox-label:after {
+  content: "";
+  position: absolute;
+}
+
+.checkbox-label:before {
+  left: 0;
+  top: 0;
+  width: 15px;
+  height: 15px;
+  border-radius: 4px;
+  border: 1px solid var(--light-gray-color);
+}
+
+.checked:before {
+  background-color: var(--dark-gray-color);
+}

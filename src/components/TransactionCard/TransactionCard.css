@@ -1,0 +1,50 @@
+.transaction-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #292929;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  gap: 20px;
+  color: #ffffff;
+}
+
+.transaction-card__header {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.transaction-card__content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.transaction-card__icon {
+  width: 24px;
+  height: 24px;
+}
+
+.transaction-card__title {
+  flex: 1;
+  margin-left: 12px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.transaction-card__amount {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.transaction-card__amount--income {
+  color: #4caf50; /* Зеленый цвет для доходов */
+}
+
+.transaction-card__amount--expense {
+  color: #f44336; /* Красный цвет для расходов */
+}

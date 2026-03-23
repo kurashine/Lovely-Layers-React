@@ -1,0 +1,32 @@
+.header {
+  height: calc(100vh - 70px);
+  background-color: var(--back-color);
+}
+
+.header__swiper {
+  height: 100%;
+}
+
+.header .swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.header .swiper-slide {
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* .header .swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.header .swiper {
+  margin-left: auto;
+  margin-right: auto;
+} */

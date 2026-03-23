@@ -1,0 +1,53 @@
+.expenses-chart {
+  background-color: rgba(16, 16, 16, 1);
+  border-radius: 8px;
+  padding: 16px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.expenses-chart__title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.expenses-chart__chart {
+  position: relative;
+}
+
+.expenses-chart__percentage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.expenses-chart__legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.expenses-chart__legend-item {
+  display: flex;
+  align-items: center;
+  margin: 4px 8px;
+}
+
+.expenses-chart__legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.expenses-chart__legend-label {
+  font-size: 14px;
+}

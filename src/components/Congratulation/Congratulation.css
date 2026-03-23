@@ -1,0 +1,35 @@
+.congratulation__title-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+
+.congratulation {
+  padding: 50px 0;
+  position: relative;
+  color: var(--dark-color);
+  text-align: center;
+}
+
+.congratulation__title-wrapper h3 {
+  font-size: 2.3rem;
+}
+
+.congratulation__title-wrapper img {
+  position: absolute;
+  left: 25%;
+}
+
+.congratulation__subtitle {
+  margin-top: 10px;
+  font-size: 2.1rem;
+  font-weight: 600;
+}
+
+.congratulation__text {
+  margin-top: 70px;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 400;
+}

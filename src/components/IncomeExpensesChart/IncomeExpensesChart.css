@@ -1,0 +1,42 @@
+.income-expenses-chart {
+  background-color: #101010;
+  padding: 20px;
+  border-radius: 10px;
+  color: #fff;
+}
+
+.chart-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.chart-filters {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.chart-filter {
+  padding: 8px 16px;
+  border: 1px solid #fff;
+  background-color: transparent;
+  color: #fff;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.chart-filter.active {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.chart-filter.active-expense {
+  background-color: #f44336;
+  color: #fff;
+}
+
+.chart-filter:not(.active):hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}

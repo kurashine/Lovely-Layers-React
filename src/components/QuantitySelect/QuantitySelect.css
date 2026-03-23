@@ -1,0 +1,26 @@
+.quantity-select {
+  display: flex;
+  gap: 20px;
+  height: 48px;
+  align-items: center;
+}
+
+.quantity-select__count {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--light-gray-color);
+  color: var(--dark-color);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.quantity-select button {
+  cursor: pointer;
+  padding: 10px;
+  border: none;
+  background-color: transparent;
+}

@@ -1,0 +1,38 @@
+.cat-sidebar {
+  padding: 0 30px;
+}
+
+.cat-sidebar__wrapper {
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 20px;
+}
+
+.cat-sidebar__wrapper:not(:first-child) {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.cat-sidebar__title {
+  margin-bottom: 20px;
+  color: var(--dark-color);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.cat-sidebar__brands {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cat-sidebar__sizes {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fill, 48px);
+  grid-template-rows: repeat(auto-fill, 48px);
+}
+
+.cat-sidebar__range-slider {
+  margin-bottom: 70px;
+}

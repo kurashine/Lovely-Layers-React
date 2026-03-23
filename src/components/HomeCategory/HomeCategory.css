@@ -1,0 +1,35 @@
+.home-category {
+  padding: 80px 0;
+}
+
+.home-category__title {
+  color: var(--dark-color);
+  font-size: 1.5rem;
+  font-style: normal;
+  margin-bottom: 40px;
+}
+
+.home-category__cards {
+  display: flex;
+  gap: 70px;
+  flex-wrap: wrap;
+}
+
+.home-category__link {
+  margin-left: auto;
+  margin-top: 30px;
+  color: var(--dark-color);
+  font-size: 0.9rem;
+  font-weight: 400;
+  display: flex;
+  gap: 20px;
+  justify-content: flex-end;
+}
+
+.home-category__link span {
+  width: 110px;
+}
+
+.home-category__cards .product-card {
+  flex: 1;
+}

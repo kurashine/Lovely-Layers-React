@@ -1,0 +1,52 @@
+.category-popularity {
+  background-color: #101010;
+  color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.category-popularity__title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.category-popularity__chart {
+  position: relative;
+}
+
+.category-popularity__percentage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.category-popularity__legend {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.category-popularity__legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.category-popularity__legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.category-popularity__legend-label {
+  font-size: 14px;
+}

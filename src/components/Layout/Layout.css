@@ -1,0 +1,11 @@
+.layout__sidear-wrapper > *:first-child {
+  width: 400px;
+}
+
+.layout__sidear-wrapper > *:last-child {
+  flex: 1;
+}
+
+.layout__sidear-wrapper {
+  display: flex;
+}

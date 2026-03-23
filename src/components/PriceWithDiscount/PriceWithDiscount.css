@@ -1,0 +1,21 @@
+.price-with-discount {
+  margin-left: 30px;
+  position: relative;
+}
+
+.price-with-discount__discount-price {
+  position: absolute;
+  color: var(--white-color);
+  top: -20px;
+  left: -25px;
+}
+
+.price-with-discount__discount-price::before {
+  content: "";
+  position: absolute;
+  height: 1px;
+  background-color: var(--white-color);
+  top: 50%;
+  left: -5px;
+  right: -5px;
+}

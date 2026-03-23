@@ -1,0 +1,30 @@
+.tabs {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  background-color: transparent;
+  padding: 10px 0;
+}
+
+.tabs__item {
+  font-size: 18px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  position: relative;
+}
+
+.tabs__item--active {
+  color: #a066f2; /* Фиолетовый цвет */
+}
+
+.tabs__item--active::after {
+  content: "";
+  position: absolute;
+  bottom: -15px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #a066f2; /* Фиолетовый цвет */
+  border-radius: 1px;
+}

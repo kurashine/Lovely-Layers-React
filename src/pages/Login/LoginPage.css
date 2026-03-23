@@ -1,0 +1,46 @@
+.login-container {
+  display: flex;
+  height: 100vh;
+  background-color: rgba(23, 23, 23, 1);
+}
+
+.login__form {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.login__right {
+  flex: 2;
+  background: url("/public/static/images/c392ba1012443451.png");
+  background-size: cover; /* Чтобы картинка заполнила всю область */
+  background-position: center; /* Чтобы центрировать изображение */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login__form-field {
+  width: 420px;
+  color: var(--white-color);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.login__form-field input {
+  outline: none;
+  color: rgba(225, 225, 225, 1);
+  font-size: 14px;
+  padding: 15px 15px;
+  background-color: transparent;
+  border: 1px solid var(--gray-color);
+  border-radius: 8px;
+  color: var(--white-color);
+}

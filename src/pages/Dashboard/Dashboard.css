@@ -1,0 +1,108 @@
+.dashboard {
+  display: flex;
+  justify-content: space-between;
+  background-color: rgba(23, 23, 23, 0.98);
+  gap: 20px;
+  padding: 20px;
+  color: #fff;
+  min-height: 100vh;
+}
+
+.dashboard__column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+  flex: 2;
+}
+
+.dashboard__center {
+  box-sizing: border-box;
+  padding: 0 100px;
+  flex: 3;
+  border-radius: 20px;
+  background-color: rgba(16, 16, 16, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+}
+
+.dashboard__balance {
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.dashboard__chart {
+  background-color: red; /* Заглушка для графика */
+  height: 200px;
+  border-radius: 10px;
+}
+
+.dashboard__chart--large {
+  height: 300px;
+}
+
+.dashboard__tabs {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  font-weight: 500;
+}
+
+.dashboard__transactions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dashboard__transaction {
+  background-color: #1e1e1e;
+  padding: 10px 20px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard__transaction-value {
+  color: #21d173;
+  font-weight: 600;
+}
+
+.dashboard-end {
+  padding: 0 20px 20px 20px;
+  background-color: rgba(23, 23, 23, 0.98);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.dashboard-end .line-chart-with-filters {
+  flex: 10;
+}
+
+.dashboard-end .conversion-rate {
+  flex: 3;
+  height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dashboard__transactions {
+  height: 350px;
+  overflow-y: auto;
+  padding-bottom: 20px;
+}
+
+.dashboard__center .plus {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 70px;
+  height: 70px;
+  cursor: pointer;
+}

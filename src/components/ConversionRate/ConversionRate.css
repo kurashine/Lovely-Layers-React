@@ -1,0 +1,52 @@
+.conversion-rate {
+  background-color: rgba(16, 16, 16, 1);
+  border-radius: 8px;
+  padding: 16px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.conversion-rate__title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.conversion-rate__chart {
+  position: relative;
+}
+
+.conversion-rate__percentage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.conversion-rate__legend {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.conversion-rate__legend-item {
+  display: flex;
+  align-items: center;
+  margin: 0 8px;
+}
+
+.conversion-rate__legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  margin-right: 8px;
+}
+
+.conversion-rate__legend-label {
+  font-size: 14px;
+}

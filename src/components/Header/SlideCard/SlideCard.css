@@ -1,0 +1,60 @@
+.slide-card {
+  color: var(--white-color);
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.slide-card__info h3 {
+  font-family: "Libre Baskerville";
+  font-size: 3.7rem;
+}
+
+.slide-card__info h2 {
+  font-family: "Libre Baskerville";
+  font-size: 4.5rem;
+}
+
+.slide-card__info p {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.slide-card__info {
+  display: flex;
+  flex-direction: column;
+}
+
+.slide-card__info div:first-child p {
+  overflow: hidden;
+  height: 145px;
+}
+
+.slide-card__info .price-with-discount {
+  margin-bottom: 20px;
+}
+
+.slide-card__info .btn a {
+  padding: 15px 60px;
+}
+
+.slide-card__info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.slide-card__info h3,
+h2,
+p {
+  text-align: left;
+}
+
+.slide-card__img {
+  border-radius: 50%;
+  object-fit: cover;
+  height: 500px;
+  width: 500px;
+}

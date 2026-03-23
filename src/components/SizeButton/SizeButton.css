@@ -1,0 +1,21 @@
+.size-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--light-gray-color);
+  color: var(--dark-color);
+  cursor: pointer;
+  background-color: transparent;
+  border-radius: 8px;
+  font-family: "Montserrat Alternates";
+  color: var(--dark-color);
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.size-button.selected {
+  border: 2px solid var(--dark-gray-color);
+  border-width: 2px;
+}
