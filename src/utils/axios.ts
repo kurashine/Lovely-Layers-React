@@ -1,36 +1,53 @@
 import axios from "axios";
 
+// 1. Очищаем baseURL от лишних слэшей
 const baseURL = process.env.REACT_APP_API_URL?.replace(/\/$/, "");
 
 const axiosInstance = axios.create({
   baseURL: baseURL,
-  // ВАЖНО: Убираем ngrok-skip-browser-warning отсюда!
   headers: {
     "Accept": "application/json",
     "Content-Type": "application/json",
   },
 });
 
-// Вместо заголовка мы добавим параметр в URL к каждому запросу
-// Ngrok понимает параметр ?ngrok-skip-browser-warning=1 так же как и заголовок,
-// но это не вызывает CORS-проверку OPTIONS!
+// 2. Улучшенный интерцептор: добавляет обход ngrok в ЛЮБОЙ запрос
 axiosInstance.interceptors.request.use(
   (config) => {
-    const separator = config.url?.includes("?") ? "&" : "?";
-    config.url = `${config.url}${separator}ngrok-skip-browser-warning=1`;
+    // Если baseURL не задан в конфиге, берем его из переменной
+    if (!config.baseURL) config.baseURL = baseURL;
+
+    // Проверяем, есть ли уже параметры в URL
+    const url = config.url || "";
+    const hasParams = url.includes("?");
+    const skipParam = "ngrok-skip-browser-warning=1";
+
+    // Добавляем параметр только если его еще нет
+    if (!url.includes("ngrok-skip-browser-warning")) {
+      config.url = `${url}${hasParams ? "&" : "?"}${skipParam}`;
+    }
+
     return config;
   },
   (error) => Promise.reject(error)
 );
 
 axiosInstance.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    // Если вместо JSON пришел HTML (признак того, что ngrok все же перехватил запрос)
+    if (typeof response.data === 'string' && response.data.includes('<!DOCTYPE html>')) {
+       console.error("Ngrok blocked the request. Returning HTML instead of JSON.");
+       return Promise.reject(new Error("NGROK_BLOCKED_JSON"));
+    }
+    return response;
+  },
   (error) => {
-    console.error("DEBUG API:", error.message);
+    console.error("DEBUG API ERROR:", error.message);
     return Promise.reject(error);
   }
 );
 
+// Важно: fetcher должен использовать axiosInstance
 export const fetcher = (url: string) =>
   axiosInstance.get(url).then((res) => res.data);
 
