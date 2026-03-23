@@ -12,31 +12,42 @@ import "./Home.css";
 const Home = () => {
   const { data, isLoading } = useHomeData();
 
-  if (!data) {
-    return null;
+  // 1. Ждем, пока данные загрузятся. 
+  // Если данных нет (null/undefined) или идет загрузка — показываем индикатор
+  if (isLoading || !data || !data.data) {
+    return <div style={{ textAlign: 'center', marginTop: '50px' }}>Загрузка...</div>;
+  }
+
+  // Для удобства создаем короткую переменную для атрибутов
+  const attr = data.data.attributes;
+
+  // 2. Если атрибутов нет (ошибка прав в Strapi), не падаем
+  if (!attr) {
+    return <div>Данные не найдены в Strapi. Проверьте публикацию и права Public.</div>;
   }
 
   return (
     <Layout className="home">
       <Header
-        productsDiscountButton={data.data.attributes.products_discount_button}
+        productsDiscountButton={attr.products_discount_button}
         isLoading={isLoading}
-        products={data.data.attributes.products_discount.data}
+        products={attr.products_discount?.data || []}
       />
       <div className="container">
         <HomeCategory
           isLoading={isLoading}
-          productNewLink={data.data.attributes.product_new_link.data.attributes}
-          productNewLinkText={data.data.attributes.product_new_link_text}
-          title={data.data.attributes.product_new_title}
-          products={data.data.attributes.product_new.data}
+          // Используем опциональную цепочку ?. на случай, если ссылки нет
+          productNewLink={attr.product_new_link?.data?.attributes}
+          productNewLinkText={attr.product_new_link_text}
+          title={attr.product_new_title}
+          products={attr.product_new?.data || []}
         />
         <Line />
-        <Congratulation congratulation={data.data.attributes.congratulation} />
+        <Congratulation congratulation={attr.congratulation} />
         <Line />
-        <HomeDesc homeDescs={data.data.attributes.home_descs.data} />
+        <HomeDesc homeDescs={attr.home_descs?.data || []} />
         <Line />
-        <HomeCards cards={data.data.attributes.cards} />
+        <HomeCards cards={attr.cards || []} />
       </div>
     </Layout>
   );
