@@ -4,34 +4,20 @@ const baseURL = process.env.REACT_APP_API_URL?.replace(/\/$/, "");
 
 const axiosInstance = axios.create({
   baseURL: baseURL,
+  // ВАЖНО: Мы удаляем ВООБЩЕ ВСЕ заголовки, кроме стандартных.
+  // Это предотвратит отправку OPTIONS запроса браузером.
   headers: {
     "Accept": "application/json",
-    "Content-Type": "application/json",
-    // ДОБАВЛЯЕМ ЭТО: обман Ngrok через User-Agent (если браузер позволит)
-    // И принудительный заголовок skip
-    "ngrok-skip-browser-warning": "69420" 
   },
 });
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    // 1. Добавляем параметр в URL (двойная защита)
     const url = config.url || "";
     const separator = url.includes("?") ? "&" : "?";
-    config.url = `${url}${separator}ngrok-skip-browser-warning=true`;
-    
+    // Параметр в URL — это единственный способ обойти проверку ngrok без CORS-ошибки
+    config.url = `${url}${separator}ngrok-skip-browser-warning=1`;
     return config;
-  },
-  (error) => Promise.reject(error)
-);
-
-axiosInstance.interceptors.response.use(
-  (response) => {
-    // Проверка на HTML вместо JSON
-    if (typeof response.data === 'string' && response.data.includes('<!DOCTYPE html>')) {
-       return Promise.reject(new Error("NGROK_STILL_BLOCKING"));
-    }
-    return response;
   },
   (error) => Promise.reject(error)
 );
