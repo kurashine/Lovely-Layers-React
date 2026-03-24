@@ -9,7 +9,8 @@ const axiosInstance = axios.create({
     "Accept": "application/json",
     // Добавляем этот заголовок для обхода заглушки туннеля
     "X-Pinggy-No-Screen": "true", 
-    "ngrok-skip-browser-warning": "true" // На случай если перейдешь на ngrok
+    "ngrok-skip-browser-warning": "true", // На случай если перейдешь на ngrok
+    "User-Agent": "PostmanRuntime/7.26.8"
   },
 });
 
