@@ -7,6 +7,9 @@ const axiosInstance = axios.create({
   headers: {
     "Content-Type": "application/json",
     "Accept": "application/json",
+    // Добавляем этот заголовок для обхода заглушки туннеля
+    "X-Pinggy-No-Screen": "true", 
+    "ngrok-skip-browser-warning": "true" // На случай если перейдешь на ngrok
   },
 });
 
