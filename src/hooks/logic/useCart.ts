@@ -116,7 +116,8 @@ export const useCart = () => {
         total_price: Number(orderData.totalPrice),
         
         // Спробуй цей формат (простий масив ID)
-        order_products: orderData.products.map((p) => Number(p.id)),
+        order_products: {
+      set: orderData.products.map((p) => Number(p.id))
       },
     };
 
