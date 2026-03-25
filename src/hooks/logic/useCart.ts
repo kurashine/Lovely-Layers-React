@@ -99,40 +99,27 @@ export const useCart = () => {
   }, [setProducts]);
 
   const submitOrder = async (orderData: CreateOrderPayload) => {
-  const {
-    firstName,
-    lastName,
-    middleName,
-    deliveryId,
-    phone,
-    email,
-    paymentId,
-    deliveryAddress,
-    products: cartProducts, // товари з аргументів функції
-    price,
-    deliveryPrice,
-    totalPrice,
-  } = orderData;
-
+  // 1. Готуємо дані для Strapi
   const body = {
     data: {
-      firstName,
-      lastName,
-      middleName: middleName || "",
-      delivery: Number(deliveryId),
-      phone,
-      email,
-      payment: Number(paymentId),
-      deliveryAddress,
-      price: Number(price),
-      delivery_price: Number(deliveryPrice),
-      total_price: Number(totalPrice),
-      
-      // КРИТИЧНО ВАЖЛИВА ЧАСТИНА:
-      // Переконайся, що назва поля "products" збігається з назвою в Strapi
-      products: cartProducts.map((p) => ({
-        product: Number(p.id), // ID товару (число)
-        count: Number(p.count)  // Кількість (число)
+      firstName: orderData.firstName,
+      lastName: orderData.lastName,
+      middleName: orderData.middleName || "",
+      phone: orderData.phone,
+      email: orderData.email,
+      deliveryAddress: orderData.deliveryAddress,
+      delivery: orderData.deliveryId, // Переконайтеся, що це ID (число)
+      payment: orderData.paymentId,   // Переконайтеся, що це ID (число)
+      price: orderData.price,
+      delivery_price: orderData.deliveryPrice,
+      total_price: orderData.totalPrice,
+
+      // ЦЕЙ БЛОК МАЄ БУТИ САМЕ ТАКИМ:
+      products: orderData.products.map((p: any) => ({
+        // Ключ 'product' має збігатися з назвою Relation у компоненті
+        product: Number(p.id), 
+        // Ключ 'count' має збігатися з назвою поля Number у компоненті
+        count: Number(p.count) 
       })),
     },
   };
@@ -141,9 +128,9 @@ export const useCart = () => {
   setError(null);
 
   try {
-    const token = process.env.REACT_APP_API_TOKEN; 
+    const token = process.env.REACT_APP_API_TOKEN;
 
-    // Відправляємо саме наш сформований body
+    // 2. Відправляємо запит саме з нашою змінною 'body'
     await axiosInstance.post(`api/orders`, body, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -159,29 +146,6 @@ export const useCart = () => {
     setIsLoading(false);
   }
 };
-
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      const token = process.env.REACT_APP_API_TOKEN; 
-
-      // 3. Відправляємо запит
-      await axiosInstance.post(`api/orders`, body, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      handleClearCart();
-    } catch (err: any) {
-      const errorMsg = err?.response?.data?.error?.message || err?.message || "An unexpected error occurred";
-      setError(errorMsg);
-      throw new Error(errorMsg);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   return {
     products,
