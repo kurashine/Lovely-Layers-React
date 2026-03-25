@@ -93,6 +93,8 @@ const Cart: React.FC = () => {
       lastName: recipientInfo.lastName,
       middleName: recipientInfo.middleName || "",
       deliveryAddress: recipientInfo.deliveryAddress,
+      phone: recipientInfo.phone,            // ДОБАВИТЬ ЭТУ СТРОКУ
+      email: "email@example.com",            // ДОБАВИТЬ (или recipientInfo.email, если есть поле)
       deliveryId: selectedDelivery!,
       paymentId: selectedPayment!,
       products: cartProducts,
