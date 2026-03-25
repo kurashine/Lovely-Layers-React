@@ -4,8 +4,8 @@ import { TCarts } from "../../types/carts";
 import axiosInstance from "../../utils/axios";
 
 interface OrderProduct {
-  id: number | string; // ID продукта
-  count: number; // Количество
+  id: number | string;
+  count: number;
 }
 
 interface CreateOrderPayload {
@@ -98,30 +98,39 @@ export const useCart = () => {
     setProducts([]);
   }, [setProducts]);
 
+  // ВИПРАВЛЕНА ФУНКЦІЯ SUBMIT ORDER
   const submitOrder = async (orderData: CreateOrderPayload) => {
-  const body = {
-    data: {
-      firstName: orderData.firstName,
-      lastName: orderData.lastName,
-      middleName: orderData.middleName || "",
-      phone: orderData.phone,
-      email: orderData.email,
-      deliveryAddress: orderData.deliveryAddress,
-      total_price: Number(orderData.totalPrice),
-      
-      order_products: orderData.products.map((p) => Number(p.id)),
-      })),
-    },
-  };
+    setIsLoading(true);
+    setError(null);
 
-  try {
-    // Переконайся, що axiosInstance.post використовує саме цей 'body'
-    await axiosInstance.post(`api/orders`, body);
-    handleClearCart();
-  } catch (err) {
-    console.error(err);
-  }
-};
+    const body = {
+      data: {
+        firstName: orderData.firstName,
+        lastName: orderData.lastName,
+        middleName: orderData.middleName || "",
+        phone: orderData.phone,
+        email: orderData.email,
+        deliveryAddress: orderData.deliveryAddress,
+        price: Number(orderData.price),
+        delivery_price: Number(orderData.deliveryPrice),
+        total_price: Number(orderData.totalPrice),
+        
+        // Передаємо масив ID для Relation (Варіант Б)
+        // Назва поля МАЄ бути order_products малими літерами
+        order_products: orderData.products.map((p) => Number(p.id)),
+      },
+    };
+
+    try {
+      await axiosInstance.post(`api/orders`, body);
+      handleClearCart();
+    } catch (err: any) {
+      console.error("Order submission error:", err);
+      setError(err?.response?.data?.error?.message || "Error submitting order");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return {
     products,
