@@ -69,6 +69,9 @@ export const useCart = () => {
     setIsLoading(true);
     setError(null);
 
+    // Strapi REST API для Many-to-Many очікує просто масив ID чисел
+    const productIds = orderData.products.map((p) => Number(p.id));
+
     const body = {
       data: {
         firstName: orderData.firstName,
@@ -81,22 +84,21 @@ export const useCart = () => {
         delivery_price: Number(orderData.deliveryPrice),
         total_price: Number(orderData.totalPrice),
         
-        // ПОВЕРТАЄМО ПРЯМИЙ МАСИВ ЧИСЕЛ (ID)
-        // Strapi 4 Many-to-Many Relation зазвичай працює саме так
-        order_products: {
-  connect: orderData.products.map((p) => Number(p.id)) 
-}
+        // ВИПРАВЛЕНО: Відправляємо просто масив ID. 
+        // Прибираємо { connect: ... }, бо REST API Strapi 4 
+        // зазвичай не приймає таку структуру через звичайний POST.
+        order_products: productIds, 
       },
     };
 
-    console.log("SENDING FINAL BODY:", JSON.stringify(body, null, 2));
+    console.log("SENDING FINAL BODY TO STRAPI:", body);
 
     try {
       const response = await axiosInstance.post(`api/orders`, body);
       console.log("SUCCESS RESPONSE:", response.data);
       handleClearCart();
     } catch (err: any) {
-      console.error("ERROR DETAILS:", err.response?.data || err);
+      console.error("ERROR FROM SERVER:", err.response?.data || err);
       setError(err?.response?.data?.error?.message || "Error");
     } finally {
       setIsLoading(false);
