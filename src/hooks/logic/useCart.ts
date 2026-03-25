@@ -74,6 +74,10 @@ export const useCart = () => {
   setIsLoading(true);
   
   // Витягуємо тільки ID товарів
+  const submitOrder = async (orderData: CreateOrderPayload) => {
+  setIsLoading(true);
+  setError(null);
+
   const productIds = orderData.products.map((p) => Number(p.id));
 
   const body = {
@@ -83,19 +87,21 @@ export const useCart = () => {
       phone: orderData.phone,
       email: orderData.email,
       deliveryAddress: orderData.deliveryAddress,
+      
+      // ВАЖЛИВО: Назви мають точно збігатися з помилками в логах
+      price: Number(orderData.price),            // Була помилка: price must be defined
+      delivery_price: Number(orderData.deliveryPrice), // Була помилка: delivery_price must be defined
       total_price: Number(orderData.totalPrice),
-      // Надсилаємо масив ID
+      
       order_products: productIds, 
     },
   };
 
   try {
     const response = await axiosInstance.post(`api/orders`, body);
-    console.log("УСПІХ:", response.data);
     handleClearCart();
   } catch (err: any) {
-    // Це допоможе нам побачити, на яке саме поле "свариться" Strapi
-    console.error("ДЕТАЛІ ПОМИЛКИ 400:", err.response?.data?.error?.details);
+    console.error("ДЕТАЛІ ПОМИЛКИ:", err.response?.data?.error?.details);
     setError(err?.response?.data?.error?.message || "Error");
   } finally {
     setIsLoading(false);
