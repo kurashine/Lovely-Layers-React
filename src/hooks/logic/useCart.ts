@@ -99,7 +99,7 @@ export const useCart = () => {
   }, [setProducts]);
 
   const submitOrder = async (orderData: CreateOrderPayload) => {
-  // 1. Готуємо дані для Strapi
+  // Готуємо об'єкт строго за структурою Strapi
   const body = {
     data: {
       firstName: orderData.firstName,
@@ -108,29 +108,25 @@ export const useCart = () => {
       phone: orderData.phone,
       email: orderData.email,
       deliveryAddress: orderData.deliveryAddress,
-      delivery: orderData.deliveryId, // Переконайтеся, що це ID (число)
-      payment: orderData.paymentId,   // Переконайтеся, що це ID (число)
-      price: orderData.price,
-      delivery_price: orderData.deliveryPrice,
-      total_price: orderData.totalPrice,
-
-      // ЦЕЙ БЛОК МАЄ БУТИ САМЕ ТАКИМ:
-      products: orderData.products.map((p: any) => ({
-        // Ключ 'product' має збігатися з назвою Relation у компоненті
+      total_price: Number(orderData.totalPrice), // Переконуємось, що це число
+      
+      // ОСЬ ТУТ САМА ВАЖЛИВА ЧАСТИНА:
+      // Поле має називатися "products", як у Strapi
+      products: orderData.products.map((p) => ({
+        // Ключ 'product' — це зв'язок з колекцією Products
         product: Number(p.id), 
-        // Ключ 'count' має збігатися з назвою поля Number у компоненті
+        // Ключ 'count' — це кількість
         count: Number(p.count) 
       })),
     },
   };
 
   setIsLoading(true);
-  setError(null);
 
   try {
     const token = process.env.REACT_APP_API_TOKEN;
 
-    // 2. Відправляємо запит саме з нашою змінною 'body'
+    // Відправляємо сформований 'body'
     await axiosInstance.post(`api/orders`, body, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -139,9 +135,8 @@ export const useCart = () => {
 
     handleClearCart();
   } catch (err: any) {
-    const errorMsg = err?.response?.data?.error?.message || err?.message || "Error";
-    setError(errorMsg);
-    throw new Error(errorMsg);
+    console.error("Помилка при створенні замовлення:", err);
+    throw err;
   } finally {
     setIsLoading(false);
   }
