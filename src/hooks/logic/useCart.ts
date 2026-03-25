@@ -12,15 +12,15 @@ interface CreateOrderPayload {
   firstName: string;
   lastName: string;
   middleName?: string;
-  deliveryId: number; // ID доставки
-  paymentId: number; // ID способа оплаты
-  phone: string; // ДОБАВИТЬ ЭТО
-  email: string; // ДОБАВИТЬ ЭТО
-  deliveryAddress: string; // Адрес доставки
-  products: OrderProduct[]; // Продукты в заказе
-  price: number; // Цена товаров
-  deliveryPrice: number; // Стоимость доставки
-  totalPrice: number; // Итоговая сумма
+  deliveryId: number; 
+  paymentId: number; 
+  phone: string; 
+  email: string; 
+  deliveryAddress: string; 
+  products: OrderProduct[]; 
+  price: number; 
+  deliveryPrice: number; 
+  totalPrice: number; 
 }
 
 export const useCart = () => {
@@ -60,6 +60,7 @@ export const useCart = () => {
       if (count === 0) {
         const newProducts = products.filter((p) => p.id !== productId);
         setProducts(newProducts);
+        return;
       }
 
       if (count) {
@@ -103,8 +104,8 @@ export const useCart = () => {
       lastName,
       middleName,
       deliveryId,
-      phone, // ДОБАВИТЬ
-      email, // ДОБАВИТЬ
+      phone,
+      email,
       paymentId,
       deliveryAddress,
       products,
@@ -113,43 +114,45 @@ export const useCart = () => {
       totalPrice,
     } = orderData;
 
+    // Формуємо об'єкт для Strapi
     const body = {
       data: {
         firstName,
         lastName,
         middleName: middleName || "",
         delivery: deliveryId,
-        phone, // ДОБАВИТЬ
-        email, // ДОБАВИТЬ
+        phone,
+        email,
         payment: paymentId,
         deliveryAddress,
         price,
         delivery_price: deliveryPrice,
         total_price: totalPrice,
-        products: products.map((p) => ({
-          product: p.id, // ID продукта
-          count: p.count, // Количество
+        // ЗМІНЕНО: тепер відправляємо в поле order_products
+        order_products: products.map((p) => ({
+          product: p.id, 
+          count: p.count, 
         })),
       },
     };
+
     setIsLoading(true);
     setError(null);
 
     try {
-      const token = process.env.REACT_APP_API_TOKEN; // Replace with your actual API token
+      const token = process.env.REACT_APP_API_TOKEN; 
 
       await axiosInstance.post(`api/orders`, body, {
         headers: {
-          // "Content-Type": "application/json",
-          // Accept: "*/*",
           Authorization: `Bearer ${token}`,
         },
       });
 
       handleClearCart();
     } catch (err: any) {
-      setError(err?.message || "An unexpected error occurred");
-      throw new Error(err?.message || "An unexpected error occurred");
+      const errorMsg = err?.response?.data?.error?.message || err?.message || "An unexpected error occurred";
+      setError(errorMsg);
+      throw new Error(errorMsg);
     } finally {
       setIsLoading(false);
     }
