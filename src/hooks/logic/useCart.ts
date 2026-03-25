@@ -118,23 +118,22 @@ export const useCart = () => {
     // 2. Формуємо правильний об'єкт для Strapi
     const body = {
       data: {
-        firstName: firstName,
-        lastName: lastName,
-        middleName: middleName || "",
-        delivery: deliveryId,
-        phone: phone,
-        email: email,
-        payment: paymentId,
-        deliveryAddress: deliveryAddress,
-        price: price,
-        delivery_price: deliveryPrice,
-        total_price: totalPrice,
+        firstName: orderData.firstName,
+        lastName: orderData.lastName,
+        middleName: orderData.middleName || "",
+        phone: orderData.phone,
+        email: orderData.email,
+        delivery: orderData.deliveryId,
+        payment: orderData.paymentId,
+        deliveryAddress: orderData.deliveryAddress,
+        price: orderData.price,
+        delivery_price: orderData.deliveryPrice,
+        total_price: orderData.totalPrice,
         
-        // ВАЖЛИВО: Назва поля має бути "products" (як у Strapi)
-        // Виправляємо помилку з 'item' на 'p'
-        products: productsFromForm.map((p) => ({
-          product: Number(p.id), // ID товару обов'язково числом
-          count: Number(p.count)  // Кількість обов'язково числом
+        // ВАЖЛИВО: структура для Repeatable Component "products"
+        products: orderData.products.map((p) => ({
+          product: Number(p.id), // Поле всередині компонента має називатися 'product'
+          count: Number(p.count)  // Поле всередині компонента має називатися 'count'
         })),
       },
     };
