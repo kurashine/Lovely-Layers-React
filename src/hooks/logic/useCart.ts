@@ -129,10 +129,9 @@ export const useCart = () => {
         delivery_price: deliveryPrice,
         total_price: totalPrice,
         // ЗМІНЕНО: тепер відправляємо в поле order_products
-        order_products: products.map((p) => ({
+        products: products.map((p) => ({
           product: p.id, 
-          count: p.count, 
-        })),
+          count: p.count,
       },
     };
 
