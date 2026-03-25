@@ -130,10 +130,10 @@ export const useCart = () => {
         delivery_price: orderData.deliveryPrice,
         total_price: orderData.totalPrice,
         
-        // ВАЖЛИВО: структура для Repeatable Component "products"
+        // ОСЬ ТУТ БУЛА ПОМИЛКА:
         products: orderData.products.map((p) => ({
-          product: Number(p.id), // Поле всередині компонента має називатися 'product'
-          count: Number(p.count)  // Поле всередині компонента має називатися 'count'
+          product: Number(p.id), // Поле всередині компонента називається 'product'
+          count: Number(p.count)  // Поле всередині компонента називається 'count'
         })),
       },
     };
