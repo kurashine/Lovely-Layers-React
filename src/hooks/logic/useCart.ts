@@ -115,9 +115,12 @@ export const useCart = () => {
         delivery_price: Number(orderData.deliveryPrice),
         total_price: Number(orderData.totalPrice),
         
-        // Передаємо масив ID для Relation (Варіант Б)
-        // Назва поля МАЄ бути order_products малими літерами
-        order_products: orderData.products.map((p) => Number(p.id)),
+        // ПРАВИЛЬНИЙ ФОРМАТ ДЛЯ RELATION:
+        // Ми передаємо масив ID. Якщо просто [id, id] не працює, 
+        // Strapi зрозуміє цей формат:
+        order_products: {
+          connect: orderData.products.map((p) => ({ id: Number(p.id) }))
+        },
       },
     };
 
