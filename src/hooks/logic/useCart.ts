@@ -69,44 +69,41 @@ export const useCart = () => {
     setIsLoading(true);
     setError(null);
 
-    // Strapi REST API для Many-to-Many очікує просто масив ID чисел
-    const submitOrder = async (orderData: CreateOrderPayload) => {
-  setIsLoading(true);
-  
-  // Витягуємо тільки ID товарів
-  const submitOrder = async (orderData: CreateOrderPayload) => {
-  setIsLoading(true);
-  setError(null);
+    // Створюємо масив ID для зв'язку order_products
+    const productIds = orderData.products.map((p) => Number(p.id));
 
-  const productIds = orderData.products.map((p) => Number(p.id));
+    const body = {
+      data: {
+        firstName: orderData.firstName,
+        lastName: orderData.lastName,
+        middleName: orderData.middleName || "",
+        phone: orderData.phone,
+        email: orderData.email,
+        deliveryAddress: orderData.deliveryAddress,
+        
+        // Виправляємо назви полів згідно з валідацією Strapi
+        price: Number(orderData.price),
+        delivery_price: Number(orderData.deliveryPrice),
+        total_price: Number(orderData.totalPrice),
+        
+        // Надсилаємо чистий масив ID
+        order_products: productIds,
+      },
+    };
 
-  const body = {
-    data: {
-      firstName: orderData.firstName,
-      lastName: orderData.lastName,
-      phone: orderData.phone,
-      email: orderData.email,
-      deliveryAddress: orderData.deliveryAddress,
-      
-      // ВАЖЛИВО: Назви мають точно збігатися з помилками в логах
-      price: Number(orderData.price),            // Була помилка: price must be defined
-      delivery_price: Number(orderData.deliveryPrice), // Була помилка: delivery_price must be defined
-      total_price: Number(orderData.totalPrice),
-      
-      order_products: productIds, 
-    },
+    console.log("SENDING TO STRAPI:", body);
+
+    try {
+      const response = await axiosInstance.post(`api/orders`, body);
+      console.log("SUCCESS:", response.data);
+      handleClearCart();
+    } catch (err: any) {
+      console.error("ERROR FROM SERVER:", err.response?.data || err);
+      setError(err?.response?.data?.error?.message || "Error");
+    } finally {
+      setIsLoading(false);
+    }
   };
-
-  try {
-    const response = await axiosInstance.post(`api/orders`, body);
-    handleClearCart();
-  } catch (err: any) {
-    console.error("ДЕТАЛІ ПОМИЛКИ:", err.response?.data?.error?.details);
-    setError(err?.response?.data?.error?.message || "Error");
-  } finally {
-    setIsLoading(false);
-  }
-};
 
   return {
     products,
