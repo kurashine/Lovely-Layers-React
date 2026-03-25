@@ -117,26 +117,24 @@ export const useCart = () => {
 
     // 2. Формуємо правильний об'єкт для Strapi
     const body = {
-      data: {
-        firstName: orderData.firstName,
-        lastName: orderData.lastName,
-        middleName: orderData.middleName || "",
-        phone: orderData.phone,
-        email: orderData.email,
-        delivery: orderData.deliveryId,
-        payment: orderData.paymentId,
-        deliveryAddress: orderData.deliveryAddress,
-        price: orderData.price,
-        delivery_price: orderData.deliveryPrice,
-        total_price: orderData.totalPrice,
-        
-        // ОСЬ ТУТ БУЛА ПОМИЛКА:
-        products: orderData.products.map((p) => ({
-          product: Number(p.id), // Поле всередині компонента називається 'product'
-          count: Number(p.count)  // Поле всередині компонента називається 'count'
-        })),
-      },
-    };
+    data: {
+      firstName: orderData.firstName,
+      lastName: orderData.lastName,
+      middleName: orderData.middleName || "",
+      phone: orderData.phone,
+      email: orderData.email,
+      delivery: orderData.deliveryId, // Переконайся, що це ID (число)
+      payment: orderData.paymentId,   // Переконайся, що це ID (число)
+      deliveryAddress: orderData.deliveryAddress,
+      total_price: orderData.totalPrice,
+  
+      // ОСЬ ТУТ САМА ВАЖЛИВА ЧАСТИНА:
+      products: orderData.products.map((p) => ({
+        product: Number(p.id), // Поле всередині компонента має називатися саме 'product'
+        count: Number(p.count) // Поле всередині компонента має називатися саме 'count'
+      })),
+    },
+  };
 
     setIsLoading(true);
     setError(null);
