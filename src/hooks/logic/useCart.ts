@@ -110,13 +110,9 @@ export const useCart = () => {
       deliveryAddress: orderData.deliveryAddress,
       total_price: Number(orderData.totalPrice), // Переконуємось, що це число
       
-      // ОСЬ ТУТ САМА ВАЖЛИВА ЧАСТИНА:
-      // Поле має називатися "products", як у Strapi
-      products: orderData.products.map((p) => ({
-        // Ключ 'product' — це зв'язок з колекцією Products
+      order_products: orderData.products.map((p) => ({
         product: Number(p.id), 
-        // Ключ 'count' — це кількість
-        count: Number(p.count) 
+        count: Number(p.count)
       })),
     },
   };
