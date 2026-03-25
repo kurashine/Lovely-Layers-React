@@ -103,6 +103,11 @@ export const useCart = () => {
     setError(null);
 
     // Спробуємо формат прямого масиву ID (найчастіше працює саме він для Many-to-Many)
+    const submitOrder = async (orderData: CreateOrderPayload) => {
+    setIsLoading(true);
+    setError(null);
+
+    // Формуємо body строго за правилами Strapi 4 для Relations
     const body = {
       data: {
         firstName: orderData.firstName,
@@ -115,21 +120,23 @@ export const useCart = () => {
         delivery_price: Number(orderData.deliveryPrice),
         total_price: Number(orderData.totalPrice),
         
-        // Спробуй цей формат (простий масив ID)
+        // Використовуємо формат 'connect' або 'set'
+        // Переконайся, що назва 'order_products' збігається з адмінкою
         order_products: {
-      set: orderData.products.map((p) => Number(p.id))
-      },
+          connect: orderData.products.map((p) => ({ id: Number(p.id) }))
+        }
+      } // Тут закінчується data
     };
 
-    console.log("SENDING BODY TO STRAPI:", JSON.stringify(body, null, 2));
+    console.log("SENDING BODY:", JSON.stringify(body, null, 2));
 
     try {
       const response = await axiosInstance.post(`api/orders`, body);
-      console.log("STRAPI RESPONSE:", response.data);
+      console.log("SUCCESS:", response.data);
       handleClearCart();
     } catch (err: any) {
-      console.error("Order submission error details:", err.response?.data || err);
-      setError(err?.response?.data?.error?.message || "Error submitting order");
+      console.error("ERROR:", err.response?.data || err);
+      setError(err?.response?.data?.error?.message || "Error");
     } finally {
       setIsLoading(false);
     }
