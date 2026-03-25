@@ -70,40 +70,37 @@ export const useCart = () => {
     setError(null);
 
     // Strapi REST API для Many-to-Many очікує просто масив ID чисел
-    const productIds = orderData.products.map((p) => Number(p.id));
+    const submitOrder = async (orderData: CreateOrderPayload) => {
+  setIsLoading(true);
+  
+  // Витягуємо тільки ID товарів
+  const productIds = orderData.products.map((p) => Number(p.id));
 
-    const body = {
-      data: {
-        firstName: orderData.firstName,
-        lastName: orderData.lastName,
-        middleName: orderData.middleName || "",
-        phone: orderData.phone,
-        email: orderData.email,
-        deliveryAddress: orderData.deliveryAddress,
-        price: Number(orderData.price),
-        delivery_price: Number(orderData.deliveryPrice),
-        total_price: Number(orderData.totalPrice),
-        
-        // ВИПРАВЛЕНО: Відправляємо просто масив ID. 
-        // Прибираємо { connect: ... }, бо REST API Strapi 4 
-        // зазвичай не приймає таку структуру через звичайний POST.
-        order_products: productIds, 
-      },
-    };
-
-    console.log("SENDING FINAL BODY TO STRAPI:", body);
-
-    try {
-      const response = await axiosInstance.post(`api/orders`, body);
-      console.log("SUCCESS RESPONSE:", response.data);
-      handleClearCart();
-    } catch (err: any) {
-      console.error("ERROR FROM SERVER:", err.response?.data || err);
-      setError(err?.response?.data?.error?.message || "Error");
-    } finally {
-      setIsLoading(false);
-    }
+  const body = {
+    data: {
+      firstName: orderData.firstName,
+      lastName: orderData.lastName,
+      phone: orderData.phone,
+      email: orderData.email,
+      deliveryAddress: orderData.deliveryAddress,
+      total_price: Number(orderData.totalPrice),
+      // Надсилаємо масив ID
+      order_products: productIds, 
+    },
   };
+
+  try {
+    const response = await axiosInstance.post(`api/orders`, body);
+    console.log("УСПІХ:", response.data);
+    handleClearCart();
+  } catch (err: any) {
+    // Це допоможе нам побачити, на яке саме поле "свариться" Strapi
+    console.error("ДЕТАЛІ ПОМИЛКИ 400:", err.response?.data?.error?.details);
+    setError(err?.response?.data?.error?.message || "Error");
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   return {
     products,
