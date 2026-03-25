@@ -130,8 +130,8 @@ export const useCart = () => {
         total_price: totalPrice,
         // ЗМІНЕНО: тепер відправляємо в поле order_products
         products: products.map((p) => ({
-          product: p.id, 
-          count: p.count,
+          product: Number(p.id), // ID має бути числом!
+          count: Number(p.count), // Кількість теж числом
       },
     };
 
