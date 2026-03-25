@@ -74,26 +74,28 @@ export const useCart = () => {
     setIsLoading(true);
     setError(null);
 
+    const submitOrder = async (orderData: CreateOrderPayload) => {
+    setIsLoading(true);
+    setError(null);
+
     const productIds = orderData.products.map((p) => Number(p.id));
 
     const body = {
       data: {
         firstName: orderData.firstName,
         lastName: orderData.lastName,
-        middleName: orderData.middleName || "", // По батькові
+        middleName: orderData.middleName || "",
         phone: orderData.phone,
         email: orderData.email,
         deliveryAddress: orderData.deliveryAddress,
-        
         price: Number(orderData.price),
         delivery_price: Number(orderData.deliveryPrice),
         total_price: Number(orderData.totalPrice),
-        
         order_products: productIds,
-
-        // ДОДАЄМО ЦІ ПОЛЯ, щоб доставка та оплата відображалися!
-        delivery: orderData.deliveryId,
-        payment: orderData.paymentId,
+        
+        // ВАЖЛИВО: ці два рядки передають ID способів доставки та оплати
+        delivery: Number(orderData.deliveryId), 
+        payment: Number(orderData.paymentId),
       },
     };
 
