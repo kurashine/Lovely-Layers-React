@@ -108,7 +108,7 @@ export const useCart = () => {
       email,
       paymentId,
       deliveryAddress,
-      products,
+      products: productsFromPayload, // Перейменував, щоб не плутати з кошиком
       price,
       deliveryPrice,
       totalPrice,
@@ -128,10 +128,11 @@ export const useCart = () => {
         price,
         delivery_price: deliveryPrice,
         total_price: totalPrice,
-        // ЗМІНЕНО: тепер відправляємо в поле order_products
-        products: products.map((p) => ({
-          product: item.id, // ID продукту
-          count: item.quantity // Кількість
+        // ТУТ БУЛИ ПОМИЛКИ, ОСЬ ВИПРАВЛЕНО:
+        products: productsFromPayload.map((p) => ({
+          product: Number(p.id), // ID продукту (має бути числом)
+          count: Number(p.count)  // Кількість
+        })), // Не забувай закривати map
       },
     };
 
