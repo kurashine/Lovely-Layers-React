@@ -31,21 +31,15 @@ export const useCart = () => {
   const handleAddProducts = useCallback(
     (productId: string, count?: number) => {
       const productInCart = products.find(({ id }) => productId === id);
-
       if (productInCart) {
         const newProducts = products.map((p) =>
           p.id === productInCart.id
-            ? {
-                ...p,
-                count: count ? count : p.count + 1,
-              }
+            ? { ...p, count: count ? count : p.count + 1 }
             : p
         );
-
         setProducts(newProducts);
         return;
       }
-
       setProducts([...products, { id: productId, count: count ? count : 1 }]);
     },
     [products, setProducts]
@@ -54,42 +48,15 @@ export const useCart = () => {
   const handleUpdateOrRemoveProduct = useCallback(
     (productId: string, count?: number) => {
       const productInCart = products.find(({ id }) => productId === id);
-
       if (!productInCart) return;
-
       if (count === 0) {
-        const newProducts = products.filter((p) => p.id !== productId);
-        setProducts(newProducts);
+        setProducts(products.filter((p) => p.id !== productId));
         return;
       }
-
-      if (count) {
-        const newProducts = products.map((p) =>
-          p.id === productId
-            ? {
-                ...p,
-                count: count,
-              }
-            : p
-        );
-        setProducts(newProducts);
-        return;
-      }
-
-      if (productInCart.count - 1 > 0) {
-        const newProducts = products.map((p) =>
-          p.id === productId
-            ? {
-                ...p,
-                count: p.count - 1,
-              }
-            : p
-        );
-        setProducts(newProducts);
-      } else {
-        const newProducts = products.filter((p) => p.id !== productId);
-        setProducts(newProducts);
-      }
+      const newProducts = products.map((p) =>
+        p.id === productId ? { ...p, count: count || p.count } : p
+      );
+      setProducts(newProducts);
     },
     [products, setProducts]
   );
@@ -102,12 +69,6 @@ export const useCart = () => {
     setIsLoading(true);
     setError(null);
 
-    // Спробуємо формат прямого масиву ID (найчастіше працює саме він для Many-to-Many)
-    const submitOrder = async (orderData: CreateOrderPayload) => {
-    setIsLoading(true);
-    setError(null);
-
-    // Формуємо body строго за правилами Strapi 4 для Relations
     const body = {
       data: {
         firstName: orderData.firstName,
@@ -119,13 +80,8 @@ export const useCart = () => {
         price: Number(orderData.price),
         delivery_price: Number(orderData.deliveryPrice),
         total_price: Number(orderData.totalPrice),
-        
-        // Використовуємо формат 'connect' або 'set'
-        // Переконайся, що назва 'order_products' збігається з адмінкою
-        order_products: {
-          connect: orderData.products.map((p) => ({ id: Number(p.id) }))
-        }
-      } // Тут закінчується data
+        order_products: orderData.products.map((p) => Number(p.id))
+      }
     };
 
     console.log("SENDING BODY:", JSON.stringify(body, null, 2));
