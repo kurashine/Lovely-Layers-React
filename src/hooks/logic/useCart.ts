@@ -80,7 +80,9 @@ export const useCart = () => {
         price: Number(orderData.price),
         delivery_price: Number(orderData.deliveryPrice),
         total_price: Number(orderData.totalPrice),
-        order_products: orderData.products.map((p) => Number(p.id))
+        order_products: {
+      connect: orderData.products.map((p) => ({ id: Number(p.id) }))
+    }
       }
     };
 
