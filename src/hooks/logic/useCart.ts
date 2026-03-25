@@ -99,6 +99,7 @@ export const useCart = () => {
   }, [setProducts]);
 
   const submitOrder = async (orderData: CreateOrderPayload) => {
+    // 1. Розпаковуємо дані, які прийшли з форми
     const {
       firstName,
       lastName,
@@ -108,31 +109,33 @@ export const useCart = () => {
       email,
       paymentId,
       deliveryAddress,
-      products: productsFromPayload, // Перейменував, щоб не плутати з кошиком
+      products: productsFromForm, // Це товари, які ми передаємо в функцію
       price,
       deliveryPrice,
       totalPrice,
     } = orderData;
 
-    // Формуємо об'єкт для Strapi
+    // 2. Формуємо правильний об'єкт для Strapi
     const body = {
       data: {
-        firstName,
-        lastName,
+        firstName: firstName,
+        lastName: lastName,
         middleName: middleName || "",
         delivery: deliveryId,
-        phone,
-        email,
+        phone: phone,
+        email: email,
         payment: paymentId,
-        deliveryAddress,
-        price,
+        deliveryAddress: deliveryAddress,
+        price: price,
         delivery_price: deliveryPrice,
         total_price: totalPrice,
-        // ТУТ БУЛИ ПОМИЛКИ, ОСЬ ВИПРАВЛЕНО:
-        products: productsFromPayload.map((p) => ({
-          product: Number(p.id), // ID продукту (має бути числом)
-          count: Number(p.count)  // Кількість
-        })), // Не забувай закривати map
+        
+        // ВАЖЛИВО: Назва поля має бути "products" (як у Strapi)
+        // Виправляємо помилку з 'item' на 'p'
+        products: productsFromForm.map((p) => ({
+          product: Number(p.id), // ID товару обов'язково числом
+          count: Number(p.count)  // Кількість обов'язково числом
+        })),
       },
     };
 
@@ -142,6 +145,7 @@ export const useCart = () => {
     try {
       const token = process.env.REACT_APP_API_TOKEN; 
 
+      // 3. Відправляємо запит
       await axiosInstance.post(`api/orders`, body, {
         headers: {
           Authorization: `Bearer ${token}`,
