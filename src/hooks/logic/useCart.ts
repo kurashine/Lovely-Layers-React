@@ -83,7 +83,9 @@ export const useCart = () => {
         
         // ПОВЕРТАЄМО ПРЯМИЙ МАСИВ ЧИСЕЛ (ID)
         // Strapi 4 Many-to-Many Relation зазвичай працює саме так
-        order_products: orderData.products.map((p) => Number(p.id)),
+        order_products: {
+  connect: orderData.products.map((p) => Number(p.id)) 
+}
       },
     };
 
