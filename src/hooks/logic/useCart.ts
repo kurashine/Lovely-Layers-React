@@ -109,12 +109,7 @@ export const useCart = () => {
       deliveryAddress: orderData.deliveryAddress,
       total_price: Number(orderData.totalPrice),
       
-      // 1. Назва поля МАЄ бути "order_products" (як ми бачили в адмінці)
-      order_products: orderData.products.map((p) => ({
-        // 2. Внутрішнє поле зв'язку МАЄ називатися "product"
-        product: Number(p.id), 
-        // 3. Кількість МАЄ називатися "count"
-        count: Number(p.count) 
+      order_products: orderData.products.map((p) => Number(p.id)),
       })),
     },
   };
