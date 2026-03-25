@@ -99,7 +99,6 @@ export const useCart = () => {
   }, [setProducts]);
 
   const submitOrder = async (orderData: CreateOrderPayload) => {
-  // Готуємо об'єкт строго за структурою Strapi
   const body = {
     data: {
       firstName: orderData.firstName,
@@ -108,33 +107,24 @@ export const useCart = () => {
       phone: orderData.phone,
       email: orderData.email,
       deliveryAddress: orderData.deliveryAddress,
-      total_price: Number(orderData.totalPrice), // Переконуємось, що це число
+      total_price: Number(orderData.totalPrice),
       
+      // 1. Назва поля МАЄ бути "order_products" (як ми бачили в адмінці)
       order_products: orderData.products.map((p) => ({
+        // 2. Внутрішнє поле зв'язку МАЄ називатися "product"
         product: Number(p.id), 
-        count: Number(p.count)
+        // 3. Кількість МАЄ називатися "count"
+        count: Number(p.count) 
       })),
     },
   };
 
-  setIsLoading(true);
-
   try {
-    const token = process.env.REACT_APP_API_TOKEN;
-
-    // Відправляємо сформований 'body'
-    await axiosInstance.post(`api/orders`, body, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
+    // Переконайся, що axiosInstance.post використовує саме цей 'body'
+    await axiosInstance.post(`api/orders`, body);
     handleClearCart();
-  } catch (err: any) {
-    console.error("Помилка при створенні замовлення:", err);
-    throw err;
-  } finally {
-    setIsLoading(false);
+  } catch (err) {
+    console.error(err);
   }
 };
 
