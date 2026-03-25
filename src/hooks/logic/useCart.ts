@@ -14,6 +14,8 @@ interface CreateOrderPayload {
   middleName?: string;
   deliveryId: number; // ID доставки
   paymentId: number; // ID способа оплаты
+  phone: string; // ДОБАВИТЬ ЭТО
+  email: string; // ДОБАВИТЬ ЭТО
   deliveryAddress: string; // Адрес доставки
   products: OrderProduct[]; // Продукты в заказе
   price: number; // Цена товаров
@@ -101,6 +103,8 @@ export const useCart = () => {
       lastName,
       middleName,
       deliveryId,
+      phone, // ДОБАВИТЬ
+      email, // ДОБАВИТЬ
       paymentId,
       deliveryAddress,
       products,
@@ -115,6 +119,8 @@ export const useCart = () => {
         lastName,
         middleName: middleName || "",
         delivery: deliveryId,
+        phone, // ДОБАВИТЬ
+        email, // ДОБАВИТЬ
         payment: paymentId,
         deliveryAddress,
         price,
