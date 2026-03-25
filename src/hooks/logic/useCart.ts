@@ -69,15 +69,6 @@ export const useCart = () => {
     setIsLoading(true);
     setError(null);
 
-    // Створюємо масив ID для зв'язку order_products
-   const submitOrder = async (orderData: CreateOrderPayload) => {
-    setIsLoading(true);
-    setError(null);
-
-    const submitOrder = async (orderData: CreateOrderPayload) => {
-    setIsLoading(true);
-    setError(null);
-
     const productIds = orderData.products.map((p) => Number(p.id));
 
     const body = {
@@ -93,7 +84,7 @@ export const useCart = () => {
         total_price: Number(orderData.totalPrice),
         order_products: productIds,
         
-        // ВАЖЛИВО: ці два рядки передають ID способів доставки та оплати
+        // Передаємо ID доставки та оплати
         delivery: Number(orderData.deliveryId), 
         payment: Number(orderData.paymentId),
       },
@@ -101,6 +92,7 @@ export const useCart = () => {
 
     try {
       const response = await axiosInstance.post(`api/orders`, body);
+      console.log("SUCCESS:", response.data);
       handleClearCart();
     } catch (err: any) {
       console.error("ERROR FROM SERVER:", err.response?.data || err);
