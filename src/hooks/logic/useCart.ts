@@ -70,32 +70,35 @@ export const useCart = () => {
     setError(null);
 
     // Створюємо масив ID для зв'язку order_products
+   const submitOrder = async (orderData: CreateOrderPayload) => {
+    setIsLoading(true);
+    setError(null);
+
     const productIds = orderData.products.map((p) => Number(p.id));
 
     const body = {
       data: {
         firstName: orderData.firstName,
         lastName: orderData.lastName,
-        middleName: orderData.middleName || "",
+        middleName: orderData.middleName || "", // По батькові
         phone: orderData.phone,
         email: orderData.email,
         deliveryAddress: orderData.deliveryAddress,
         
-        // Виправляємо назви полів згідно з валідацією Strapi
         price: Number(orderData.price),
         delivery_price: Number(orderData.deliveryPrice),
         total_price: Number(orderData.totalPrice),
         
-        // Надсилаємо чистий масив ID
         order_products: productIds,
+
+        // ДОДАЄМО ЦІ ПОЛЯ, щоб доставка та оплата відображалися!
+        delivery: orderData.deliveryId,
+        payment: orderData.paymentId,
       },
     };
 
-    console.log("SENDING TO STRAPI:", body);
-
     try {
       const response = await axiosInstance.post(`api/orders`, body);
-      console.log("SUCCESS:", response.data);
       handleClearCart();
     } catch (err: any) {
       console.error("ERROR FROM SERVER:", err.response?.data || err);
