@@ -104,15 +104,16 @@ const Product = () => {
           <p className="product__desc">{desc}</p>
           <h6 className="product__details-title">{size_title}</h6>
           <div className="product__sizes">
-            {shoes_sizes.data.map(({ id, attributes }) => (
-              <SizeButton
-                selected={sizeId === id}
-                onClick={() => handleSize(id)}
-                label={attributes.size}
-                key={id}
-              />
-            ))}
-          </div>
+  {shoes_sizes.data.map(({ id, attributes }: any) => (
+    <SizeButton
+      selected={sizeId === id}
+      onClick={() => handleSize(id)}
+      // Спробуй вивести name, якщо size став порожнім
+      label={attributes.size || attributes.name || "Н/Д"} 
+      key={id}
+    />
+  ))}
+</div>
           <div className="product__details-footer">
             <QuantitySelect
               maxCount={quantity}
