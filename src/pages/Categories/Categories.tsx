@@ -63,17 +63,11 @@ const Categories = () => {
       {/* TODO: should add pagination logic */}
       {/* TODO: should add loadin logic */}
       {/* TODO: should add empty data logic */}
-      <div className="cat">
-  {!data ? (
-    <p>Завантаження товарів...</p>
-  ) : data.length === 0 ? (
-    <p>У цій категорії поки немає товарів</p>
-  ) : (
-    data.map((product) => (
-      <ProductCard key={product.id} product={product} />
-    ))
-  )}
-</div>
+       <div className="cat">
+        {data.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
+      </div>
     </Layout>
   );
 };
