@@ -8,10 +8,3 @@
     max-width: 900px;       /* Обмежує ширину для зручності читання */
 }
 
-/* Кожен окремий рядок тексту (якщо компонент HomeDesc використовує p або div) */
-.home-desc p, 
-.home-desc div {
-    margin-bottom: 20px;
-    font-size: 2rem;      /* Можна трохи збільшити розмір */
-    line-height: 1.6;
-}
