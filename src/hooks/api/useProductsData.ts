@@ -27,7 +27,7 @@ export function useProductsData({
         pageSize,
       },
       filters: {
-        category: {
+        categories: {
           slug: {
             $eq: slug,
           },
