@@ -15,6 +15,20 @@ interface Props {
 }
 
 const SlideCard: FC<Props> = ({ id, data, productsDiscountButton }) => {
+  // 1. Безпечно отримуємо slug категорії (враховуємо масив Many-to-Many)
+  // Перевіряємо і однину .category, і множину .categories на всякий випадок
+  const categoryData = (data as any).categories?.data || (data as any).category?.data;
+  const categorySlug = categoryData?.[0]?.attributes?.slug || "all";
+
+  // 2. Безпечно отримуємо валюту
+  const currencyName = data.currency?.data?.attributes?.name || "грн";
+
+  // 3. Безпечно отримуємо першу картинку
+  const firstImageData = data.images?.data?.[0]?.attributes;
+  const imageUrl = firstImageData?.url 
+    ? process.env.REACT_APP_API_URL + firstImageData.url 
+    : "/placeholder.png";
+
   return (
     <div className="container slide-card">
       <div className="slide-card__info">
@@ -24,12 +38,13 @@ const SlideCard: FC<Props> = ({ id, data, productsDiscountButton }) => {
         </div>
         <div>
           <PriceWithDiscount
-            currency={data.currency.data.attributes.name}
+            currency={currencyName}
             discountPrice={data.discount_price as string}
             price={data.price}
           />
           <Button
-            href={`/categories/${data.category.data.attributes.slug}/${id}`}
+            // Використовуємо знайдений slug
+            href={`/categories/${categorySlug}/${id}`}
             btnType="link"
             buttonProps={productsDiscountButton}
           />
@@ -38,10 +53,8 @@ const SlideCard: FC<Props> = ({ id, data, productsDiscountButton }) => {
       <div>
         <img
           className="slide-card__img"
-          src={
-            process.env.REACT_APP_API_URL + data.images.data[0].attributes.url
-          }
-          alt={data.images.data[0].attributes.alternativeText}
+          src={imageUrl}
+          alt={firstImageData?.alternativeText || data.name}
         />
       </div>
     </div>
