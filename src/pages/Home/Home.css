@@ -1,55 +1,28 @@
-/* --- 1. ТЕКСТ ПО ЦЕНТРУ (home_descs) --- */
-.home-desc {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    margin: 40px 0;
-}
-
-.home-desc p, 
-.home-desc div {
-    line-height: 1.6;
-    font-weight: bold;
-}
-
-/* --- 2. КАРТКИ РІВНО ПО КРАЯХ (cards) --- */
+/* Контейнер, який тримає всі картки (батьківський блок) */
 .home-cards {
-    display: flex;
-    justify-content: space-between; /* Розштовхує їх максимально вліво та вправо */
-    width: 100%;                   /* Займати всю доступну ширину контейнера */
-    margin: 60px 0;                 /* Відступ від ліній */
-    gap: 20px;                      /* Мінімальний зазор між ними */
+    display: flex !important;       /* Вмикаємо гнучкий контейнер */
+    flex-direction: row !important; /* ПРИМУСОВО в один рядок */
+    justify-content: space-between; /* Розштовхуємо: один вліво, другий вправо */
+    align-items: center;            /* Вирівнюємо по висоті (по центру) */
+    width: 100%;                    /* На всю ширину */
+    margin: 60px 0;                 /* Відступи зверху/знизу */
+    gap: 20px;                      /* Відстань між ними */
 }
 
-/* Перша картка (зліва) */
+/* Перша картка (та, що зліва) */
 .home-cards > *:first-child {
-    text-align: left;
-    flex: 0 1 auto;                 /* Не розтягувати, але дозволити бути на краю */
+    text-align: left;               /* Текст всередині притиснутий вліво */
+    flex: 1;                        /* Займає половину простору */
 }
 
-/* Остання картка (справа) */
+/* Остання картка (та, що справа) */
 .home-cards > *:last-child {
-    text-align: right;
-    flex: 0 1 auto;                 /* Не розтягувати, але дозволити бути на краю */
+    text-align: right;              /* Текст всередині притиснутий вправо */
+    flex: 1;                        /* Займає половину простору */
 }
 
-/* Якщо карток ТРИ, і ти хочеш, щоб середня не заважала - 
-   ми можемо її приховати або просто залишити по центру */
+/* Якщо карток три - центральна буде просто посередині */
 .home-cards > *:nth-child(2) {
     text-align: center;
-}
-
-/* На мобілках ставимо один під одним, щоб текст не злипався */
-@media (max-width: 768px) {
-    .home-cards {
-        flex-direction: column;
-        text-align: center;
-        gap: 30px;
-    }
-    .home-cards > *:first-child,
-    .home-cards > *:last-child {
-        text-align: center;
-        max-width: 100%;
-    }
+    flex: 1;
 }
