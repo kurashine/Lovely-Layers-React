@@ -5,3 +5,8 @@
     align-items: center;    /* Центрує блоки відносно один одного */
     text-align: center;     /* Центрує текст всередині блоків */
 }
+
+.home-desc p, 
+.home-desc div {
+    line-height: 1.6;
+}
