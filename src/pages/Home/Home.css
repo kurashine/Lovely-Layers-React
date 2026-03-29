@@ -1,0 +1,17 @@
+/* Контейнер для всіх блоків тексту */
+.home-desc {
+    display: flex;
+    flex-direction: column;
+    align-items: center;    /* Центрує блоки відносно один одного */
+    text-align: center;     /* Центрує текст всередині блоків */
+    margin: 60px auto;      /* Відступи зверху/знизу */
+    max-width: 900px;       /* Обмежує ширину для зручності читання */
+}
+
+/* Кожен окремий рядок тексту (якщо компонент HomeDesc використовує p або div) */
+.home-desc p, 
+.home-desc div {
+    margin-bottom: 20px;
+    font-size: 1.2rem;      /* Можна трохи збільшити розмір */
+    line-height: 1.6;
+}
