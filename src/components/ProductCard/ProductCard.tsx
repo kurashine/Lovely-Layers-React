@@ -22,31 +22,43 @@ const ProductCard: FC<IProductCard> = ({
     onTrashClick?.();
   };
 
+  // 1. Отримуємо категорію (враховуємо, що тепер це може бути масив)
+  // ПЕРЕВІР: якщо в Strapi поле перейменувалося на categories, заміни .category на .categories
+  const categoryAttributes = product.attributes.category?.data?.[0]?.attributes 
+    || (product.attributes as any).categories?.data?.[0]?.attributes;
+    
+  const categorySlug = categoryAttributes?.slug || "all";
+
+  // 2. Безпечне отримання картинки
+  const imageData = product.attributes.images?.data?.[0]?.attributes;
+  const imageUrl = imageData?.url 
+    ? process.env.REACT_APP_API_URL + imageData.url 
+    : "/placeholder.png";
+
   return (
     <Link
       className="product-card"
-      to={`/categories/${product.attributes.category.data.attributes.slug}/${product.id}`}
+      // Використовуємо знайдений slug
+      to={`/categories/${categorySlug}/${product.id}`}
     >
       <img
         className="product-card__img"
-        src={
-          process.env.REACT_APP_API_URL +
-          product.attributes.images.data[0].attributes.url
-        }
-        alt={product.attributes.images.data[0].attributes.alternativeText}
+        src={imageUrl}
+        alt={imageData?.alternativeText || product.attributes.name}
       />
       <div className="product-card__hero">
         <div>
           <p>{product.attributes.name}</p>
           <Price
-            currency={product.attributes.currency.data.attributes.name}
+            // Додаємо ? для валюти
+            currency={product.attributes.currency?.data?.attributes?.name || "грн"}
             price={product.attributes.price}
           />
         </div>
         {showTrash && (
           <button onClick={handleTrashClick}>
             <img
-              src="static/images/trash-gray.svg"
+              src="/static/images/trash-gray.svg" // Додав / на початку для коректного шляху
               alt="Trash"
               className="product-card__trash"
             />
