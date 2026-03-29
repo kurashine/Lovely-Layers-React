@@ -9,4 +9,5 @@
 .home-desc p, 
 .home-desc div {
     line-height: 1.6;
+    font-weight: bold;
 }
