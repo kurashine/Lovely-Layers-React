@@ -11,3 +11,23 @@
     line-height: 1.6;
     font-weight: bold;
 }
+
+.home-cards {
+    display: flex;
+    justify-content: space-between; /* Розносить блоки: один вліво, другий вправо */
+    align-items: flex-start;
+    margin: 50px 0;
+    gap: 20px;
+}
+
+/* Ліва картка (Підібрана унікальна колекція) */
+.home-cards > *:first-child {
+    text-align: left;
+    max-width: 300px; /* Обмежуємо ширину, щоб текст гарно переносився */
+}
+
+/* Права картка (Слідкуйте за трендами) */
+.home-cards > *:last-child {
+    text-align: right;
+    max-width: 300px;
+}
