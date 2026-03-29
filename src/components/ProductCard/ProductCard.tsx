@@ -24,8 +24,9 @@ const ProductCard: FC<IProductCard> = ({
 
   // 1. Отримуємо категорію (враховуємо, що тепер це може бути масив)
   // ПЕРЕВІР: якщо в Strapi поле перейменувалося на categories, заміни .category на .categories
-  const categoryAttributes = product.attributes.category?.data?.[0]?.attributes 
-    || (product.attributes as any).categories?.data?.[0]?.attributes;
+  const categoryAttributes = 
+    (product.attributes as any).category?.data?.[0]?.attributes || 
+    (product.attributes as any).categories?.data?.[0]?.attributes;
     
   const categorySlug = categoryAttributes?.slug || "all";
 
